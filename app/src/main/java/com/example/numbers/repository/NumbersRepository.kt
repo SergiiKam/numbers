@@ -13,6 +13,7 @@ class NumbersRepository @Inject constructor(
 ){
 
     suspend fun updateNumberDetails(number : Int) {
+
         val details = numbersApi.getNumberDetails(number)
 
         Log.d("details", details)

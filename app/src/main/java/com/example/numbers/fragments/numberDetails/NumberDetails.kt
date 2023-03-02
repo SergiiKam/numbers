@@ -26,9 +26,11 @@ class NumberDetails : Fragment() {
         binding = FragmentNumberDetailsBinding.inflate(layoutInflater)
         viewModel = ViewModelProvider(this)[NumberDetailsViewModel::class.java]
 
-//        viewModel.getNumberDetail(arguments?.getInt("Number")!!).observe(viewLifecycleOwner, Observer {
-//            binding.details.text = it
-//        })
+        viewModel.getNumberDetail(arguments?.getInt("Number")!!).observe(viewLifecycleOwner, Observer {
+            binding.details.text = it
+        })
+
+        //binding.details.text = viewModel.getNumberDetail(arguments?.getInt("Number")!!)
 
         return binding.root
     }
