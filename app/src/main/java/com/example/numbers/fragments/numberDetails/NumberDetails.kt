@@ -7,9 +7,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import com.example.numbers.R
 import com.example.numbers.databinding.FragmentNumberDetailsBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NumberDetails : Fragment() {
 
     private lateinit var viewModel: NumberDetailsViewModel
@@ -23,7 +26,9 @@ class NumberDetails : Fragment() {
         binding = FragmentNumberDetailsBinding.inflate(layoutInflater)
         viewModel = ViewModelProvider(this)[NumberDetailsViewModel::class.java]
 
-        binding.details.text = viewModel.getNumberDetail(arguments?.getInt("Number")!!)
+//        viewModel.getNumberDetail(arguments?.getInt("Number")!!).observe(viewLifecycleOwner, Observer {
+//            binding.details.text = it
+//        })
 
         return binding.root
     }

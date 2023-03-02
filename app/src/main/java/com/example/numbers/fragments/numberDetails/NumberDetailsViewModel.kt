@@ -1,22 +1,26 @@
 package com.example.numbers.fragments.numberDetails
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.numbers.api.SingletonRetrofit
-import com.example.numbers.room.NumberDao
-import kotlinx.coroutines.Dispatchers
+import com.example.numbers.repository.NumbersRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class NumberDetailsViewModel @Inject constructor(
-    private val numberDao: NumberDao
+    private val numbersRepository: NumbersRepository
 ): ViewModel() {
 
     fun getNumberDetail(number : Int) : LiveData<String> {
-        return numberDao.getInfoAboutNumber(number)
+        viewModelScope.launch {
+            numbersRepository.updateNumberDetails(number)
+        }
+
+        return numbersRepository.getNumberDetail(number)
     }
+
 
 
 }

@@ -9,7 +9,9 @@ import android.view.ViewGroup
 import com.example.numbers.R
 import com.example.numbers.databinding.FragmentNumberInputBinding
 import com.example.numbers.fragments.numberDetails.NumberDetails
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NumberInput : Fragment() {
 
     private lateinit var binding: FragmentNumberInputBinding
@@ -24,8 +26,6 @@ class NumberInput : Fragment() {
         binding.getNumberDetails.setOnClickListener {
 
             if (binding.inputNumber.text.toString().isNotEmpty()) {
-
-                Log.d("log123", binding.inputNumber.text.toString())
 
                 val bundle : Bundle = Bundle()
                 bundle.putInt("Number", binding.inputNumber.text.toString().toInt())

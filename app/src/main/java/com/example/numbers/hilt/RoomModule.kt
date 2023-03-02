@@ -12,7 +12,6 @@ import javax.inject.Singleton
 import com.example.numbers.room.DBase
 import com.example.numbers.room.NumberDao
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 
 @InstallIn(SingletonComponent::class)
@@ -22,7 +21,8 @@ class RoomModule {
    @Provides
    @Singleton
    fun provideInstance(@ApplicationContext context: Context) : DBase {
-       return Room.databaseBuilder(context, DBase::class.java, "database").build()
+       return Room.databaseBuilder(context, DBase::class.java, "database")
+           .build()
    }
 
     @Provides
