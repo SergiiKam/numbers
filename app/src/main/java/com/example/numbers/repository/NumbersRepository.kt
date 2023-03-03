@@ -26,7 +26,7 @@ class NumbersRepository @Inject constructor(
         return numberDao.getInfoAboutNumber(number)
     }
 
-    fun getNumbersHistory() : LiveData<String> {
+    fun getNumbersHistory() : LiveData<List<String>> {
         return numberDao.getNumbersHistory()
     }
 
