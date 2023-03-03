@@ -10,13 +10,13 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import com.example.numbers.R
 import com.example.numbers.databinding.FragmentNumbersHistoryBinding
+import com.example.numbers.fragments.BaseFragment
 import com.example.numbers.fragments.numberHistory.adapter.NumbersAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class NumbersHistory : Fragment() {
+class NumbersHistory : BaseFragment<FragmentNumbersHistoryBinding>() {
 
-    private lateinit var binding: FragmentNumbersHistoryBinding
     private lateinit var viewModel: NumbersHistoryViewModel
 
     override fun onCreateView(
@@ -24,20 +24,22 @@ class NumbersHistory : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        binding = FragmentNumbersHistoryBinding.inflate(layoutInflater)
+        val view = inflater.inflate(R.layout.fragment_numbers_history, container, false)
 
-        viewModel = ViewModelProvider(this).get(NumbersHistoryViewModel::class.java)
+        setBinding(FragmentNumbersHistoryBinding.bind(view))
+
+        viewModel = ViewModelProvider(this)[NumbersHistoryViewModel::class.java]
+
+        val adapter = NumbersAdapter()
 
         viewModel.getNumbersHistory().observe(viewLifecycleOwner, Observer {
 
-            it.forEach { element ->
-                Log.d("history", element)
-            }
+            adapter.setNewList(it)
         })
 
-        val adapter = NumbersAdapter()
-        //binding.rec_view = adapter
 
-        return binding.root
+        getBinding().recView.adapter = adapter
+
+        return getBinding().root
     }
 }
