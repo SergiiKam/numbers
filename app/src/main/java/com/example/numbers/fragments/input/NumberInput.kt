@@ -1,14 +1,11 @@
 package com.example.numbers.fragments.input
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.numbers.R
 import com.example.numbers.databinding.FragmentNumberInputBinding
-import com.example.numbers.databinding.FragmentNumbersHistoryBinding
 import com.example.numbers.fragments.BaseFragment
 import com.example.numbers.fragments.numberDetails.NumberDetails
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,7 +26,7 @@ class NumberInput : BaseFragment<FragmentNumberInputBinding>() {
 
             if (getBinding().inputNumber.text.toString().isNotEmpty()) {
 
-                val bundle : Bundle = Bundle()
+                val bundle = Bundle()
                 bundle.putInt("Number", getBinding().inputNumber.text.toString().toInt())
 
                 val fragment = NumberDetails()

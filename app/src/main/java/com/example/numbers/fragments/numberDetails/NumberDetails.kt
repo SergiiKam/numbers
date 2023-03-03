@@ -1,16 +1,12 @@
 package com.example.numbers.fragments.numberDetails
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.example.numbers.R
 import com.example.numbers.databinding.FragmentNumberDetailsBinding
-import com.example.numbers.databinding.FragmentNumbersHistoryBinding
 import com.example.numbers.fragments.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,9 +26,9 @@ class NumberDetails : BaseFragment<FragmentNumberDetailsBinding>() {
 
         viewModel = ViewModelProvider(this)[NumberDetailsViewModel::class.java]
 
-        viewModel.getNumberDetail(arguments?.getInt("Number")!!).observe(viewLifecycleOwner, Observer {
+        viewModel.getNumberDetail(arguments?.getInt("Number")!!).observe(viewLifecycleOwner) {
             getBinding().details.text = it
-        })
+        }
 
         return getBinding().root
     }
