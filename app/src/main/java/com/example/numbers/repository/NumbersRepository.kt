@@ -26,4 +26,10 @@ class NumbersRepository @Inject constructor(
         return numberDao.getInfoAboutNumber(number)
     }
 
+    fun getNumbersHistory() : LiveData<String> {
+        return numberDao.getNumbersHistory()
+    }
+
+
+
 }

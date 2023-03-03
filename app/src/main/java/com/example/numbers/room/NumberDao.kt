@@ -14,4 +14,8 @@ interface NumberDao {
 
     @Query("select text from NumberInfo where id = :number")
     fun getInfoAboutNumber(number : Int) : LiveData<String>
+
+    @Query("select text from NumberInfo")
+    fun getNumbersHistory() : LiveData<String>
+
 }

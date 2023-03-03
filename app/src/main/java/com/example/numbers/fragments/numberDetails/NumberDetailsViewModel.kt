@@ -22,6 +22,4 @@ class NumberDetailsViewModel @Inject constructor(
         return numbersRepository.getNumberDetail(number)
     }
 
-
-
 }
