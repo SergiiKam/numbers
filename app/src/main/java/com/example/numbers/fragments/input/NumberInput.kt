@@ -1,46 +1,46 @@
 package com.example.numbers.fragments.input
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import com.example.numbers.R
 import com.example.numbers.databinding.FragmentNumberInputBinding
-import com.example.numbers.fragments.numberDetails.NumberDetails
+import com.example.numbers.fragments.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class NumberInput : Fragment() {
+class NumberInput : BaseFragment<FragmentNumberInputBinding>() {
 
-    private lateinit var binding: FragmentNumberInputBinding
+    private lateinit var viewModel: NumberInputViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
-        binding = FragmentNumberInputBinding.inflate(layoutInflater)
+        val view = inflater.inflate(R.layout.fragment_number_input, container, false)
+        setBinding(FragmentNumberInputBinding.bind(view))
 
-        binding.getNumberDetails.setOnClickListener {
+        viewModel = ViewModelProvider(this)[NumberInputViewModel::class.java]
 
-            if (binding.inputNumber.text.toString().isNotEmpty()) {
+        getBinding().getNumberDetails.setOnClickListener {
 
-                val bundle : Bundle = Bundle()
-                bundle.putInt("Number", binding.inputNumber.text.toString().toInt())
+            if (getBinding().inputNumber.text.toString().isNotEmpty()) {
 
-                val fragment = NumberDetails()
-                fragment.arguments = bundle
-
-                parentFragmentManager.beginTransaction()
-                    .replace(R.id.activity_main_fragment, fragment)
-                    .addToBackStack("add")
-                    .commit()
+                viewModel.getNumberDetails(getBinding().inputNumber.text.toString().toInt())
 
             }
         }
 
-        return binding.root
+        getBinding().getRandomNumberDetails.setOnClickListener {
+
+            viewModel.getRandomInt()
+
+        }
+
+        return getBinding().root
     }
+
 }

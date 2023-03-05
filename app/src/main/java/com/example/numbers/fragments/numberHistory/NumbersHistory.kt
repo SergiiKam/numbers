@@ -1,22 +1,20 @@
 package com.example.numbers.fragments.numberHistory
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.example.numbers.R
 import com.example.numbers.databinding.FragmentNumbersHistoryBinding
+import com.example.numbers.fragments.BaseFragment
+import com.example.numbers.fragments.numberDetails.NumberDetails
 import com.example.numbers.fragments.numberHistory.adapter.NumbersAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class NumbersHistory : Fragment() {
+class NumbersHistory : BaseFragment<FragmentNumbersHistoryBinding>() {
 
-    private lateinit var binding: FragmentNumbersHistoryBinding
     private lateinit var viewModel: NumbersHistoryViewModel
 
     override fun onCreateView(
@@ -24,20 +22,31 @@ class NumbersHistory : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        binding = FragmentNumbersHistoryBinding.inflate(layoutInflater)
+        val view = inflater.inflate(R.layout.fragment_numbers_history, container, false)
 
-        viewModel = ViewModelProvider(this).get(NumbersHistoryViewModel::class.java)
+        setBinding(FragmentNumbersHistoryBinding.bind(view))
 
-        viewModel.getNumbersHistory().observe(viewLifecycleOwner, Observer {
+        viewModel = ViewModelProvider(this)[NumbersHistoryViewModel::class.java]
 
-            it.forEach { element ->
-                Log.d("history", element)
-            }
-        })
+        val adapter = NumbersAdapter(::onAdapterClick)
 
-        val adapter = NumbersAdapter()
-        //binding.rec_view = adapter
+        viewModel.getNumbersHistory().observe(viewLifecycleOwner) { it ->
+            adapter.setNewList(it)
+        }
 
-        return binding.root
+
+        getBinding().recView.adapter = adapter
+
+        return getBinding().root
+    }
+
+    private fun onAdapterClick(bundle: Bundle) {
+        val fragment = NumberDetails()
+        fragment.arguments = bundle
+
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.activity_main_fragment, fragment)
+            .addToBackStack("add")
+            .commit()
     }
 }

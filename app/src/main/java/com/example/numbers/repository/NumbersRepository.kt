@@ -9,27 +9,42 @@ import javax.inject.Inject
 
 class NumbersRepository @Inject constructor(
     private val numberDao: NumberDao,
-    private val numbersApi : NumbersApi
-){
+    private val numbersApi: NumbersApi
+) {
 
-    suspend fun updateNumberDetails(number : Int) {
+    suspend fun updateNumberDetails(number: Int) {
 
-        val details = numbersApi.getNumberDetails(number)
-
-        Log.d("details", details)
-
-        numberDao.insert(NumberInfo(number, details))
-
+        val str = numbersApi.getNumberDetails(number).filter { !it.isDigit() }
+        Log.d("updateNumberDetails" , str)
+        insertNumberInDao(number, str)
     }
 
-    fun getNumberDetail(number : Int) : LiveData<String> {
+    fun insertNumberInDao(number: Int, text: String) {
+        insertNumberInDao(NumberInfo(number = number, text = text))
+    }
+
+    fun insertNumberInDao(numberInfo: NumberInfo) {
+        numberDao.insert(numberInfo)
+    }
+
+    fun getNumberDetail(number: Int): LiveData<NumberInfo> {
         return numberDao.getInfoAboutNumber(number)
     }
 
-    fun getNumbersHistory() : LiveData<List<String>> {
+    fun getNumbersHistory(): LiveData<List<NumberInfo>> {
         return numberDao.getNumbersHistory()
     }
 
+    suspend fun getRandomNumber(): NumberInfo {
+
+        val str = numbersApi.getRandomNumberDetails()
+
+        Log.d("getRandomNumber", str)
+
+        return NumberInfo(
+            number = str.filter { it.isDigit() }.toInt(),
+            text = str.filter { !it.isDigit() })
+    }
 
 
 }

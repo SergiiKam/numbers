@@ -5,7 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class NumberInfo(
-    @PrimaryKey
-    val id : Int,
+    @PrimaryKey(autoGenerate = true)
+    val id : Int? = null,
+    val number : Int,
     val text : String
 )
