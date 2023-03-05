@@ -42,7 +42,7 @@ class NumbersAdapter(val onAdapterClick: (Bundle) -> Unit) :
         holder.itemView.findViewById<LinearLayout>(R.id.recycle_view_element).setOnClickListener {
 
             val bundle = Bundle()
-            bundle.putInt("Number", numberList[position].number)
+            bundle.putInt("Number", numberList[position].id!!)
 
             onAdapterClick(bundle)
         }

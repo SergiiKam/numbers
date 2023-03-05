@@ -12,8 +12,8 @@ interface NumberDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(numbersInfo : NumberInfo)
 
-    @Query("select text from NumberInfo where number = :number")
-    fun getInfoAboutNumber(number : Int) : LiveData<String>
+    @Query("select * from NumberInfo where id = :id")
+    fun getInfoAboutNumber(id : Int) : LiveData<NumberInfo>
 
     @Query("select * from NumberInfo")
     fun getNumbersHistory() : LiveData<List<NumberInfo>>

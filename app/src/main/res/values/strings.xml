@@ -5,4 +5,5 @@
     <string name="getFact">Get fact</string>
     <string name="getRandomNumberFact">Get fact about random number</string>
     <string name="number">number</string>
+    <string name="details_info">%1$s - %2$s</string>
 </resources>

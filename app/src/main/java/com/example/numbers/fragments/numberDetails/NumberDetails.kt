@@ -30,7 +30,7 @@ class NumberDetails : BaseFragment<FragmentNumberDetailsBinding>() {
 
         if (number != null) {
             viewModel.getNumberDetail(number).observe(viewLifecycleOwner) {
-                getBinding().details.text = it
+                getBinding().details.text = String.format( view.resources.getString(R.string.details_info), it.number, it.text )
             }
         }
 
