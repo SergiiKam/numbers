@@ -15,10 +15,6 @@ class NumberDetailsViewModel @Inject constructor(
 ): ViewModel() {
 
     fun getNumberDetail(number : Int) : LiveData<String> {
-        viewModelScope.launch(Dispatchers.IO) {
-            numbersRepository.updateNumberDetails(number)
-        }
-
         return numbersRepository.getNumberDetail(number)
     }
 

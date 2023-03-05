@@ -7,6 +7,8 @@ interface NumbersApi {
 
     @GET("/{number}")
     suspend fun getNumberDetails(@Path("number") number: Int) : String
-    
+
+    @GET("random/math")
+    suspend fun getRandomNumberDetails() : String
 
 }

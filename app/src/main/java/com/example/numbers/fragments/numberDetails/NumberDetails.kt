@@ -26,8 +26,12 @@ class NumberDetails : BaseFragment<FragmentNumberDetailsBinding>() {
 
         viewModel = ViewModelProvider(this)[NumberDetailsViewModel::class.java]
 
-        viewModel.getNumberDetail(arguments?.getInt("Number")!!).observe(viewLifecycleOwner) {
-            getBinding().details.text = it
+        val number = arguments?.getInt("Number")
+
+        if (number != null) {
+            viewModel.getNumberDetail(number).observe(viewLifecycleOwner) {
+                getBinding().details.text = it
+            }
         }
 
         return getBinding().root
