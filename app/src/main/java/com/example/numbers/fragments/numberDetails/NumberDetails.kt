@@ -5,10 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import com.example.numbers.R
+import androidx.lifecycle.lifecycleScope
 import com.example.numbers.databinding.FragmentNumberDetailsBinding
 import com.example.numbers.fragments.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class NumberDetails : BaseFragment<FragmentNumberDetailsBinding>() {
@@ -20,21 +21,26 @@ class NumberDetails : BaseFragment<FragmentNumberDetailsBinding>() {
         savedInstanceState: Bundle?
     ): View {
 
-        val view = inflater.inflate(R.layout.fragment_number_details, container, false)
+        //val view = inflater.inflate(R.layout.fragment_number_details, container, false)
 
-        setBinding(FragmentNumberDetailsBinding.bind(view))
+        setBinding(FragmentNumberDetailsBinding.inflate(layoutInflater, container, false))
 
         viewModel = ViewModelProvider(this)[NumberDetailsViewModel::class.java]
 
-        val number = arguments?.getInt("Number")
+        return getBinding().apply {
+            launchWhenStarted()
+        }.root
+    }
 
-        if (number != null) {
-            viewModel.getNumberDetail(number).observe(viewLifecycleOwner) {
-                getBinding().details.text = String.format( view.resources.getString(R.string.details_info), it.number, it.text )
+    private fun launchWhenStarted() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            val number = arguments?.getInt("Number")
+            if (number != null) {
+                viewModel.getNumberDetail(number).collectLatest {
+                    getBinding().details.text = it.text
+                }
             }
         }
-
-        return getBinding().root
     }
 
 }

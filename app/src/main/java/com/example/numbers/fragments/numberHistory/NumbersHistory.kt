@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.numbers.R
 import com.example.numbers.databinding.FragmentNumbersHistoryBinding
 import com.example.numbers.fragments.BaseFragment
@@ -22,22 +23,24 @@ class NumbersHistory : BaseFragment<FragmentNumbersHistoryBinding>() {
         savedInstanceState: Bundle?
     ): View {
 
-        val view = inflater.inflate(R.layout.fragment_numbers_history, container, false)
-
-        setBinding(FragmentNumbersHistoryBinding.bind(view))
+        setBinding(FragmentNumbersHistoryBinding.inflate(layoutInflater, container, false))
 
         viewModel = ViewModelProvider(this)[NumbersHistoryViewModel::class.java]
 
-        val adapter = NumbersAdapter(::onAdapterClick)
+        return getBinding().apply { launchWhenStarted() }.root
+    }
 
-        viewModel.getNumbersHistory().observe(viewLifecycleOwner) { it ->
-            adapter.setNewList(it)
+    private fun launchWhenStarted() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            val adapter = NumbersAdapter(::onAdapterClick)
+
+            getBinding().recView.adapter = adapter
+
+            viewModel.getNumbersHistory().collect {
+                adapter.setNewList(it)
+            }
+
         }
-
-
-        getBinding().recView.adapter = adapter
-
-        return getBinding().root
     }
 
     private fun onAdapterClick(bundle: Bundle) {

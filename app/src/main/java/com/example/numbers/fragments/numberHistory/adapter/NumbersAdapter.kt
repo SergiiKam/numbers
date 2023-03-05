@@ -1,5 +1,6 @@
 package com.example.numbers.fragments.numberHistory.adapter
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -48,6 +49,7 @@ class NumbersAdapter(val onAdapterClick: (Bundle) -> Unit) :
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setNewList(list: List<NumberInfo>) {
         numberList = list
         notifyDataSetChanged()

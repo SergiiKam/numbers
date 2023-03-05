@@ -1,21 +1,21 @@
 package com.example.numbers.room
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.numbers.data.NumberInfo
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface NumberDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(numbersInfo : NumberInfo)
+    fun insert(numbersInfo: NumberInfo)
 
     @Query("select * from NumberInfo where id = :id")
-    fun getInfoAboutNumber(id : Int) : LiveData<NumberInfo>
+    fun getInfoAboutNumber(id: Int): Flow<NumberInfo>
 
     @Query("select * from NumberInfo")
-    fun getNumbersHistory() : LiveData<List<NumberInfo>>
+    fun getNumbersHistory(): Flow<List<NumberInfo>>
 
 }

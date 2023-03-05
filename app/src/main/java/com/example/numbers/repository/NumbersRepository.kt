@@ -1,10 +1,10 @@
 package com.example.numbers.repository
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import com.example.numbers.api.NumbersApi
 import com.example.numbers.data.NumberInfo
 import com.example.numbers.room.NumberDao
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class NumbersRepository @Inject constructor(
@@ -15,7 +15,7 @@ class NumbersRepository @Inject constructor(
     suspend fun updateNumberDetails(number: Int) {
 
         val str = numbersApi.getNumberDetails(number).filter { !it.isDigit() }
-        Log.d("updateNumberDetails" , str)
+        Log.d("updateNumberDetails", str)
         insertNumberInDao(number, str)
     }
 
@@ -27,11 +27,11 @@ class NumbersRepository @Inject constructor(
         numberDao.insert(numberInfo)
     }
 
-    fun getNumberDetail(number: Int): LiveData<NumberInfo> {
+    fun getNumberDetail(number: Int): Flow<NumberInfo> {
         return numberDao.getInfoAboutNumber(number)
     }
 
-    fun getNumbersHistory(): LiveData<List<NumberInfo>> {
+    fun getNumbersHistory(): Flow<List<NumberInfo>> {
         return numberDao.getNumbersHistory()
     }
 
