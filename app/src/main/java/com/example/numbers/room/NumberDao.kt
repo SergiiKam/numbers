@@ -15,7 +15,7 @@ interface NumberDao {
     @Query("select * from NumberInfo where id = :id")
     fun getInfoAboutNumber(id: Int): Flow<NumberInfo>
 
-    @Query("select * from NumberInfo")
+    @Query("select * from NumberInfo order by id desc")
     fun getNumbersHistory(): Flow<List<NumberInfo>>
 
 }
