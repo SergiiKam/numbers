@@ -8,8 +8,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.numbers.R
 import com.example.numbers.databinding.FragmentNumberInputBinding
 import com.example.numbers.fragments.BaseFragment
-import com.example.numbers.fragments.numberDetails.NumberDetails
-import com.example.numbers.fragments.numberDetails.NumberDetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -44,20 +42,5 @@ class NumberInput : BaseFragment<FragmentNumberInputBinding>() {
 
         return getBinding().root
     }
-
-//    fun showNumberDetailsInfo(number: Int, updateNumberFromServer : Boolean) {
-//
-//        val bundle = Bundle()
-//        bundle.putInt("Number", number)
-//        bundle.putBoolean("updateNumberFromServer", updateNumberFromServer)
-//
-//        val fragment = NumberDetails()
-//        fragment.arguments = bundle
-//
-//        parentFragmentManager.beginTransaction()
-//            .replace(R.id.activity_main_fragment, fragment)
-//            .addToBackStack("add")
-//            .commit()
-//    }
 
 }

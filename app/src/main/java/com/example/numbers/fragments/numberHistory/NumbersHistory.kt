@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.numbers.R
 import com.example.numbers.databinding.FragmentNumbersHistoryBinding
 import com.example.numbers.fragments.BaseFragment
+import com.example.numbers.fragments.numberDetails.NumberDetails
 import com.example.numbers.fragments.numberHistory.adapter.NumbersAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,7 +28,7 @@ class NumbersHistory : BaseFragment<FragmentNumbersHistoryBinding>() {
 
         viewModel = ViewModelProvider(this)[NumbersHistoryViewModel::class.java]
 
-        val adapter = NumbersAdapter()
+        val adapter = NumbersAdapter(::onAdapterClick)
 
         viewModel.getNumbersHistory().observe(viewLifecycleOwner) { it ->
             adapter.setNewList(it)
@@ -37,5 +38,15 @@ class NumbersHistory : BaseFragment<FragmentNumbersHistoryBinding>() {
         getBinding().recView.adapter = adapter
 
         return getBinding().root
+    }
+
+    private fun onAdapterClick(bundle: Bundle) {
+        val fragment = NumberDetails()
+        fragment.arguments = bundle
+
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.activity_main_fragment, fragment)
+            .addToBackStack("add")
+            .commit()
     }
 }

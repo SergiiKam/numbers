@@ -2,19 +2,16 @@ package com.example.numbers.fragments.numberDetails
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.numbers.repository.NumbersRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class NumberDetailsViewModel @Inject constructor(
     private val numbersRepository: NumbersRepository
-): ViewModel() {
+) : ViewModel() {
 
-    fun getNumberDetail(number : Int) : LiveData<String> {
+    fun getNumberDetail(number: Int): LiveData<String> {
         return numbersRepository.getNumberDetail(number)
     }
 

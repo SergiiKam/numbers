@@ -4,4 +4,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="getFact">Get fact</string>
     <string name="getRandomNumberFact">Get fact about random number</string>
+    <string name="number">number</string>
 </resources>
