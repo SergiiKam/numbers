@@ -23,8 +23,7 @@ class NumberInputViewModel @Inject constructor(
 
         viewModelScope.launch(Dispatchers.IO) {
 
-            val numberInfo = numbersRepository.getRandomNumber()
-            numbersRepository.insertNumberInDao(numberInfo)
+            numbersRepository.getAndUpdateRandomNumber()
         }
 
     }

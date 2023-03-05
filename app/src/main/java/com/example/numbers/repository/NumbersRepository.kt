@@ -19,11 +19,11 @@ class NumbersRepository @Inject constructor(
         insertNumberInDao(number, str)
     }
 
-    fun insertNumberInDao(number: Int, text: String) {
+    private fun insertNumberInDao(number: Int, text: String) {
         insertNumberInDao(NumberInfo(number = number, text = text))
     }
 
-    fun insertNumberInDao(numberInfo: NumberInfo) {
+    private fun insertNumberInDao(numberInfo: NumberInfo) {
         numberDao.insert(numberInfo)
     }
 
@@ -35,7 +35,9 @@ class NumbersRepository @Inject constructor(
         return numberDao.getNumbersHistory()
     }
 
-    suspend fun getRandomNumber(): NumberInfo {
+    suspend fun getAndUpdateRandomNumber() = insertNumberInDao(getRandomNumber())
+
+    private suspend fun getRandomNumber(): NumberInfo {
 
         val str = numbersApi.getRandomNumberDetails()
 
